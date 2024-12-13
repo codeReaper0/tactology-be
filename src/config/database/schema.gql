@@ -1,0 +1,130 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type LoginResponse {
+  accessToken: String!
+}
+
+type SubDepartment {
+  id: String!
+  name: String!
+  department: Department!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Department {
+  id: String!
+  name: String!
+  subDepartments: [SubDepartment!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type PaginateDepartment {
+  data: [Department!]!
+  count: Float!
+  currentPage: Float!
+  lastPage: Float!
+}
+
+type SuccessResponse {
+  status: Boolean!
+  message: String!
+}
+
+type Query {
+  loginUser(loginUserDto: LoginUserDto!): LoginResponse!
+  getUser(getUserDto: GetUserDto!): User
+  getUsers: [User!]!
+  findOne(id: String!): Department!
+  findAll(query: PaginationsDto!): PaginateDepartment!
+  findById(id: String!): Department!
+  getAllSubDepartments: [SubDepartment!]!
+  getSubDepartment(id: String!): SubDepartment!
+}
+
+input LoginUserDto {
+  email: String!
+  password: String!
+}
+
+input GetUserDto {
+  id: String!
+}
+
+input PaginationsDto {
+  startDate: DateTime
+  endDate: DateTime
+  page: Float
+  pageSize: Float
+}
+
+type Mutation {
+  registerUser(registerUserDto: RegisterUserDto!): LoginResponse!
+  createUser(createUserDto: CreateUserDto!): User!
+  createDepartment(createDepartmentDto: CreateDepartmentDto!): Department!
+  updateDepartment(updateDepartmentDto: UpdateDepartmentDto!): Department!
+  deleteDepartment(id: String!): SuccessResponse!
+  createSubDepartment(subDepartmentDto: SubDepartmentDto!): SubDepartment!
+  updateSubDepartment(updateSubDepartmentDto: UpdateSubDepartmentDto!): SubDepartment!
+  deleteSubDepartment(id: String!): SuccessResponse!
+}
+
+input RegisterUserDto {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+}
+
+input CreateUserDto {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+}
+
+input CreateDepartmentDto {
+  name: String!
+  subDepartments: [SubDepartmentDto!]
+}
+
+input SubDepartmentDto {
+  name: String
+  departmentId: String
+}
+
+input UpdateDepartmentDto {
+  id: String!
+  name: String!
+  subDepartments: [UpdateSubDepartmentDto!]
+}
+
+input UpdateSubDepartmentDto {
+  id: String!
+  name: String
+  departmentId: String
+}
